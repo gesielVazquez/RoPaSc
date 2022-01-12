@@ -4,24 +4,23 @@ let computer = "";
 let score = [0 , 0];
 let macht = "";
 
+const container = document.querySelector('.points');
+const result = document.querySelector('.container');
+const scorePlayer = document.createElement("h1");
+const scoreCPU = document.createElement("h1");
+const winner = document.createElement("h1");
+
 function computerPlay(){
     let num = Math.floor(Math.random() * (3));
     let choose = options[num]
     return computer = choose;
 }
 
-
-
 function playerPlay(){
-    let ansEnter = (prompt("Please enter your chose Rock, Paper, Scissors: "));
-    let lower = ansEnter.toLowerCase();
-    let first = lower.slice(0, 1);
-    let second = lower.slice(1);
-    let answer = first.toUpperCase() + second;
-    return player = answer;
+    computerPlay();
+    round(player, computer);
+    scoreScreen(score[0], score[1]);
 }
-
-
 
 function round (playerSelection, computerSelection){
 
@@ -68,24 +67,28 @@ function round (playerSelection, computerSelection){
     }
 }
 
-function game (){
-    for (i = 0; i < 5; i++){
-        computerPlay();
-        console.log(computer);
-        playerPlay();
-        console.log(player);
-        round(player, computer);
-        console.log(macht);
-    }
-    if(score[0] > score[1]){
-        return console.log("You Win the game " + score[0] + " a " + score[1]);
-    }
-    else if (score[0] < score[1]){
-        return console.log("You Lose the game " + score[0] + " a " + score[1]);
-    }
-    else{
-        return console.log("This match was a Draw " + score[0] + " a " + score[1]);
-    }
+function scoreScreen (player, cpu){
+    scorePlayer.style.color = "blue";
+    scorePlayer.textContent = player;
+    container.appendChild(scorePlayer);
+
+    scoreCPU.style.color = "red";
+    scoreCPU.textContent = cpu;
+    container.appendChild(scoreCPU);
+
 }
 
-game();
+  document.body.addEventListener("click", event => {
+    if (event.target.nodeName == "BUTTON") {
+      player = event.target.textContent;
+      playerPlay();
+    }
+    if (score[0] == 5){
+        winner.textContent = "Felicidades Ganaste!!";
+        result.appendChild(winner);
+    }
+    else if(score[1] == 5){
+        winner.textContent = "Tu perdiste";
+        result.appendChild(winner);
+    }
+  });
